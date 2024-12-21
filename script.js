@@ -76,15 +76,21 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 /////////////////////////////////////////////////
 
 const displayMovements = function (movements) {
+  // With inner HTML we can easly clear the elements value
+  containerMovements.innerHTML = '';
+
   movements.forEach(function (value, i) {
     const type = value > 0 ? 'deposit' : 'withdrawal';
     // This is called template literall
     const html = `
           <div class="movements__row">
-          <div class="movements__type movements__type--${type}">${i} ${type}</div>
+          <div class="movements__type movements__type--${type}">${
+      i + 1
+    } ${type}</div>
           <div class="movements__value">${value}€</div>
           </div>
     `;
+    containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
 displayMovements(account1.movements);
