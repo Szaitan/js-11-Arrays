@@ -2,7 +2,7 @@
 
 function checkDogs(dogsJulia, dogsKatie) {
   const correctDogsJulia = dogsJulia.slice(1, dogsJulia.length - 2);
-  console.log(correctDogsJulia);
+  console.log(dogsJulia);
 
   const combineDogsData = correctDogsJulia.concat(dogsKatie);
   console.log(combineDogsData);

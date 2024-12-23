@@ -94,3 +94,25 @@ const displayMovements = function (movements) {
   });
 };
 displayMovements(account1.movements);
+
+// const computeNames = accounts.map(function (account) {
+//   return account.owner
+//     .toLowerCase()
+//     .split(' ')
+//     .map(function (map) {
+//       return map[0];
+//     })
+//     .join('');
+// });
+
+accounts.forEach(function (account) {
+  account['username'] = account.owner
+    .toLowerCase()
+    .split(' ')
+    .map(function (data) {
+      return data[0];
+    })
+    .join('');
+});
+
+console.log(accounts);
