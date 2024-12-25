@@ -30,10 +30,12 @@ function calcAverageHumanAge(arr) {
     return value <= 2 ? value * 2 : 16 + value * 4;
   });
   console.log(dogsAgeintohumansAge);
+
   const dogsAbove18 = dogsAgeintohumansAge.filter(function (value) {
     if (value >= 18) return value;
   });
   console.log(dogsAbove18);
+
   const averageAge =
     dogsAbove18.reduce(function (current, val) {
       return current + val;
