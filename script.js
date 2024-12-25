@@ -95,16 +95,6 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
-// const computeNames = accounts.map(function (account) {
-//   return account.owner
-//     .toLowerCase()
-//     .split(' ')
-//     .map(function (map) {
-//       return map[0];
-//     })
-//     .join('');
-// });
-
 accounts.forEach(function (account) {
   account['username'] = account.owner
     .toLowerCase()
@@ -114,5 +104,14 @@ accounts.forEach(function (account) {
     })
     .join('');
 });
+
+// Function to count balance
+const balance = function (movements) {
+  const total = movements.reduce(function (current, value, i) {
+    return current + value;
+  }, 0);
+  labelBalance.textContent = total + ' €';
+};
+balance(movements);
 
 console.log(accounts);
