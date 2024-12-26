@@ -45,3 +45,13 @@ function calcAverageHumanAge(arr) {
 
 calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+
+// Challenge 3
+function calcAverageHumanAge2(arr) {
+  const avgFinal = arr
+    .map(value => (value <= 2 ? value * 2 : 16 + value * 4))
+    .filter(value => value >= 18)
+    .reduce((current, value, i, data) => current + value / data.length, 0);
+  return avgFinal;
+}
+console.log(calcAverageHumanAge2([5, 2, 4, 1, 15, 8, 3]));
