@@ -95,6 +95,31 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
+const displayIN = function (arr) {
+  const totalIN = arr
+    .filter(function (value) {
+      return value > 0;
+    })
+    .reduce(function (current, value) {
+      return current + value;
+    }, 0);
+  labelSumIn.textContent = `${totalIN}€`;
+  labelSumInterest.textContent = `${totalIN * 0.012}€`;
+};
+displayIN(movements);
+
+const displayOUT = function (arr) {
+  const totalIN = arr
+    .filter(function (value) {
+      return value < 0;
+    })
+    .reduce(function (current, value) {
+      return current + value;
+    }, 0);
+  labelSumOut.textContent = `${totalIN}€`;
+};
+displayOUT(movements);
+
 accounts.forEach(function (account) {
   account['username'] = account.owner
     .toLowerCase()
