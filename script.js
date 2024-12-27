@@ -75,11 +75,11 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-const displayMovements = function (movements) {
+const displayMovements = function (account) {
   // With inner HTML we can easly clear the elements value
   containerMovements.innerHTML = '';
 
-  movements.forEach(function (value, i) {
+  account.movements.forEach(function (value, i) {
     const type = value > 0 ? 'deposit' : 'withdrawal';
     // This is called template literall
     const html = `
@@ -93,10 +93,9 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
 
-const displayIN = function (arr) {
-  const totalIN = arr
+const displayIN = function (account) {
+  const totalIN = account.movements
     .filter(function (value) {
       return value > 0;
     })
@@ -104,12 +103,11 @@ const displayIN = function (arr) {
       return current + value;
     }, 0);
   labelSumIn.textContent = `${totalIN}€`;
-  labelSumInterest.textContent = `${totalIN * 0.012}€`;
+  labelSumInterest.textContent = `${totalIN * (account.interestRate / 100)}€`;
 };
-displayIN(movements);
 
-const displayOUT = function (arr) {
-  const totalIN = arr
+const displayOUT = function (account) {
+  const totalIN = account.movements
     .filter(function (value) {
       return value < 0;
     })
@@ -118,8 +116,8 @@ const displayOUT = function (arr) {
     }, 0);
   labelSumOut.textContent = `${totalIN}€`;
 };
-displayOUT(movements);
 
+// Adding username to objects
 accounts.forEach(function (account) {
   account['username'] = account.owner
     .toLowerCase()
@@ -129,14 +127,47 @@ accounts.forEach(function (account) {
     })
     .join('');
 });
+console.log(accounts);
 
 // Function to count balance
-const balance = function (movements) {
-  const total = movements.reduce(function (current, value, i) {
+const balance = function (account) {
+  const total = account.movements.reduce(function (current, value, i) {
     return current + value;
   }, 0);
   labelBalance.textContent = total + ' €';
 };
-balance(movements);
 
-console.log(accounts);
+// login user
+// Important to take out the current user of function inner scope
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  // prevent button from submiting data
+  e.preventDefault();
+
+  let user = inputLoginUsername.value.toLowerCase();
+  let pin = inputLoginPin.value;
+
+  const currentAccount = accounts.find(function (acc) {
+    return acc.username === user && acc.pin === Number(pin);
+  });
+
+  if (currentAccount) {
+    containerApp.style.opacity = '1';
+    labelWelcome.textContent = `Good Day, ${
+      currentAccount.owner.split(' ')[0]
+    }!`;
+    // Display movements
+    displayMovements(currentAccount);
+    // Display deposit
+    displayIN(currentAccount);
+    // Display withdraw
+    displayOUT(currentAccount);
+    // Display Balance
+    balance(currentAccount);
+
+    inputLoginUsername.value = inputLoginPin.value = '';
+    // Removal of blur
+    inputLoginPin.blur();
+  }
+});
