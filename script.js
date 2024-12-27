@@ -131,15 +131,28 @@ console.log(accounts);
 
 // Function to count balance
 const balance = function (account) {
-  const total = account.movements.reduce(function (current, value, i) {
+  account.balance = account.movements.reduce(function (current, value, i) {
     return current + value;
   }, 0);
-  labelBalance.textContent = total + ' €';
+  labelBalance.textContent = account.balance + ' €';
 };
+
+// Update UI
+function updateUI(acc) {
+  // Display movements
+  displayMovements(acc);
+  // Display deposit
+  displayIN(acc);
+  // Display withdraw
+  displayOUT(acc);
+  // Display Balance
+  balance(acc);
+}
 
 // login user
 // Important to take out the current user of function inner scope
 let currentAccount;
+let receiver;
 
 btnLogin.addEventListener('click', function (e) {
   // prevent button from submiting data
@@ -148,7 +161,7 @@ btnLogin.addEventListener('click', function (e) {
   let user = inputLoginUsername.value.toLowerCase();
   let pin = inputLoginPin.value;
 
-  const currentAccount = accounts.find(function (acc) {
+  currentAccount = accounts.find(function (acc) {
     return acc.username === user && acc.pin === Number(pin);
   });
 
@@ -157,17 +170,32 @@ btnLogin.addEventListener('click', function (e) {
     labelWelcome.textContent = `Good Day, ${
       currentAccount.owner.split(' ')[0]
     }!`;
-    // Display movements
-    displayMovements(currentAccount);
-    // Display deposit
-    displayIN(currentAccount);
-    // Display withdraw
-    displayOUT(currentAccount);
-    // Display Balance
-    balance(currentAccount);
-
+    updateUI(currentAccount);
     inputLoginUsername.value = inputLoginPin.value = '';
     // Removal of blur
     inputLoginPin.blur();
+  }
+});
+
+// money transfer
+btnTransfer.addEventListener('click', function (e) {
+  // prevent button from submiting data
+  e.preventDefault();
+  const receiverStrig = inputTransferTo.value;
+  receiver = accounts.find(function (user) {
+    return user.username === receiverStrig.toLowerCase();
+  });
+  const transferAmount = Number(inputTransferAmount.value);
+  if (receiver) {
+    if (currentAccount.balance > transferAmount) {
+      currentAccount.movements.push(-transferAmount);
+      receiver.movements.push(transferAmount);
+      updateUI(currentAccount);
+      // Receiver gets money
+    } else {
+      alert(`${transferAmount} is greater than account balance.\Try again.`);
+    }
+  } else {
+    alert(`${receiverStrig} user doesn't exist.\nTry again`);
   }
 });
