@@ -199,3 +199,23 @@ btnTransfer.addEventListener('click', function (e) {
     alert(`${receiverStrig} user doesn't exist.\nTry again`);
   }
 });
+
+// closing accout
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    // findIndex return us index number of object in array
+    const index = accounts.findIndex(function (acc) {
+      return acc.username === currentAccount.username;
+    });
+    if (index !== -1) {
+      accounts.splice(index, index + 1);
+      containerApp.style.opacity = 0;
+      inputClosePin.blur();
+      labelWelcome.textContent = 'Log in to get started';
+    }
+  }
+});
