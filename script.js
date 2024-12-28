@@ -219,3 +219,17 @@ btnClose.addEventListener('click', function (e) {
     }
   }
 });
+
+// taking loan
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const loanValue = Number(inputLoanAmount.value);
+  if (
+    currentAccount.movements.some(function (data) {
+      return data * 1.1 > loanValue;
+    })
+  ) {
+    currentAccount.movements.push(loanValue);
+    updateUI(currentAccount);
+  }
+});
