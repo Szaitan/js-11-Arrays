@@ -1,3 +1,5 @@
+'use strict';
+
 // Sort method alows to sort array
 // It can sort strings from lower to higher
 // IMPORTANT: It mutates exisiting array
