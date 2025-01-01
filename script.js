@@ -75,11 +75,16 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-const displayMovements = function (account) {
+const displayMovements = function (account, sort = false) {
   // With inner HTML we can easly clear the elements value
   containerMovements.innerHTML = '';
-
-  account.movements.forEach(function (value, i) {
+  console.log('test');
+  const moves = sort
+    ? account.movements.slice().sort(function (a, b) {
+        return a - b;
+      })
+    : account.movements;
+  moves.forEach(function (value, i) {
     const type = value > 0 ? 'deposit' : 'withdrawal';
     // This is called template literall
     const html = `
@@ -93,6 +98,12 @@ const displayMovements = function (account) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
+
+let isSorted = false; // Przechowuje stan sortowania
+btnSort.addEventListener('click', function () {
+  isSorted = !isSorted; // Przełączanie stanu
+  displayMovements(currentAccount, isSorted);
+});
 
 const displayIN = function (account) {
   const totalIN = account.movements
