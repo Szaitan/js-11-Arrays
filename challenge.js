@@ -133,3 +133,11 @@ const theTrueDog = dogs.filter(function (dog) {
 console.log(theTrueDog);
 
 // part 8
+console.log('////////////');
+const shallow = [...dogs];
+
+console.log(
+  shallow.sort(function (a, b) {
+    return b.curFood - a.curFood;
+  })
+);
