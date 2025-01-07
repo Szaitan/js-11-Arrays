@@ -75,6 +75,16 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
+// Test of array .from
+// labelBalance.addEventListener('click', function () {
+//   console.log(
+//     Array.from(document.querySelectorAll('.movements__value'), function (el) {
+//       console.log(el.textContent);
+//       return Number(el.textContent.replace('€', ''));
+//     })
+//   );
+// }); //[1300, 70, -130, -650, 3000, -400, 450, 200]
+
 const displayMovements = function (account, sort = false) {
   // With inner HTML we can easly clear the elements value
   containerMovements.innerHTML = '';
