@@ -16,7 +16,7 @@ console.log(x); // [empty × 7]
 // console.log(x); // [1, 1, 1, 1, 1, 1, 1]
 
 // if we will use .fill with (1, 3, 5)
-// we will receive part of array filled with value 1
+// we will receive array which slice will containe 1
 
 x.fill(1, 3, 5);
 console.log(x); // [empty × 3, 1, 1, empty × 2]
