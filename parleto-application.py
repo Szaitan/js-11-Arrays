@@ -35,8 +35,7 @@ def mediana(data):
         return (data[data_len//2-1] + data[data_len//2]) /2
 
 def solution1(expenses):
-    result = {}
-
+    all_expenses = []
     # Creating of two arrays with year and months value
     for year_and_month, days in expenses.items():
         year, month = map(int, year_and_month.split("-"))
@@ -49,18 +48,16 @@ def solution1(expenses):
                 break
         
         # Combining values from days into one array of sunday
-        all_expenses = []
         for day, categories in days.items():
             if int(day) <= first_sunday:
                 for category, amounts in categories.items():
                     all_expenses.extend(amounts)
             
         # Couting mediana for each month
-        result[year_and_month] = mediana(all_expenses)
-    return result
+    return  mediana(all_expenses)
 
 # Solution
-solution1(expenses)
+print(solution1(expenses))
         
 # //////////////////////////////////////////////
 def quick_select(arr, k):
@@ -91,8 +88,7 @@ def calculate_median(values):
         return (left + right) / 2
 
 def solution2(expenses):
-    result = {}
-
+    all_expenses = []
     for month, days in expenses.items():
         year, month_num = map(int, month.split('-'))
 
@@ -104,21 +100,19 @@ def solution2(expenses):
                 break
 
         # Combining values from days into one array of sunday
-        all_expenses = []
+
         for day, categories in days.items():
             if int(day) <= first_sunday:
                 for amounts in categories.values():
                     all_expenses.extend(amounts)
 
-        # Mediana calculation
-        result[month] = calculate_median(all_expenses)
-    return result
+    # Mediana calculation
+    return calculate_median(all_expenses)
+
+print(solution2(expenses))
 
 # Why I used quick select?
 '''
 The time of quick select is O(n) becasuse i have to find just the one element array
 If i would like to use quick sort, the time complexity would be O(n log n)
 '''
-
-# Solution
-solution2(expenses)
